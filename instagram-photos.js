@@ -6,7 +6,7 @@ javascript: {
     link.download = file.name;
     link.click();
   }
-  var username = document.getElementsByClassName("Username")[0].children[0].text;
+  var username = window._sharedData.entry_data.UserProfile[0].user.username;
   var req = new XMLHttpRequest();
   var pictures = [];
   req.onload = function(event) {
