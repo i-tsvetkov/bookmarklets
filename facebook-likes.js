@@ -7,12 +7,9 @@ javascript: {
     link.click();
   }
 
-  function load_all(callback) {
+  function load_all(callback, test_func) {
     var i = setInterval(function() {
-              if (document.querySelectorAll("._359.img").length == 1
-                  || document.querySelectorAll(".pam.uiBoxLightblue.uiMorePagerPrimary").length == 1
-                  || (document.querySelectorAll("#browse_end_of_results_footer").length == 0
-                      && document.querySelectorAll("._akq").length == 1))
+              if (test_func())
                 window.scrollTo(0, document.body.scrollHeight);
               else {
                 clearInterval(i);
@@ -46,6 +43,6 @@ javascript: {
                     text: JSON.stringify({ friends: friends }, null, '\t') });
   }
 
-  load_all(extract_friends);
+  load_all(extract_friends, function(){ return document.querySelectorAll(".pam.uiBoxLightblue.uiMorePagerPrimary").length == 1; });
 };
 void(0);
