@@ -43,6 +43,6 @@ javascript: {
                     text: JSON.stringify({ friends: friends }, null, '\t') });
   }
 
-  load_all(extract_friends, function(){ return document.querySelectorAll(".pam.uiBoxLightblue.uiMorePagerPrimary").length == 1; });
+  load_all(extract_friends, function(){ return document.querySelector(".pam.uiBoxLightblue.uiMorePagerPrimary"); });
 };
 void(0);

@@ -35,7 +35,7 @@ javascript: {
   }
 
   load_all(extract_photos, function(){ return document.querySelectorAll("._359.img").length == 1
-                                              || (document.querySelectorAll("#browse_end_of_results_footer").length == 0
-                                                  && document.querySelectorAll("._akq").length == 1); });
+                                              || (! document.querySelector("#browse_end_of_results_footer")
+                                                  && document.querySelector("._akq")); });
 };
 void(0);
