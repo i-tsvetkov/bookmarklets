@@ -37,6 +37,10 @@ javascript: {
     var imgs = Array.prototype.slice.call(document.images);
     var csss = Array.prototype.slice.call(document.styleSheets).filter(s => s.href);
     var jss  = Array.prototype.slice.call(document.scripts).filter(s => s.src);
+    var links = Array.prototype.slice.call(document.links);
+
+    /* remove relative urls */
+    links.map(l => l.href = l.href);
 
     var asem = (function (fire_func) {
       var lock = 0;
