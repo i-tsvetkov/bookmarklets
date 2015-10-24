@@ -56,7 +56,9 @@ javascript: {
           rem();
         };
       };
-    })(() => document.location = 'data:text/html;charset=utf-8,' + encodeURIComponent(document.body.parentNode.outerHTML));
+    })(() => document.location = 'data:text/html;charset='
+                                 + document.characterSet + ','
+                                 + encodeURIComponent(document.body.parentNode.outerHTML));
 
     imgs.map(i => img_to_b64(i.src, asem(d => i.src = d)));
     csss.map(s => get_data(s.href, asem(d => s.href = 'data:text/css;base64,' + b64encode(d))));
