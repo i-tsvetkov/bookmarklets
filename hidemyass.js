@@ -4,7 +4,9 @@ javascript: {
     var link = document.createElement("a");
     link.href = window.URL.createObjectURL(blob);
     link.download = file.name;
+    document.body.appendChild(link);
     link.click();
+    setTimeout(() => link.remove(), 1000);
   }
 
   function get_ip(row) {
