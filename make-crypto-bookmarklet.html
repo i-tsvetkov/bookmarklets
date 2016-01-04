@@ -17,9 +17,11 @@
   </script>
 </head>
 <body>
-  <input id="password" type="password" placeholder="Enter Password"><br>
-  <textarea id="code" placeholder="Enter javascript"></textarea><br>
-  <button id="generate" onclick="go();">generate bookmarklet</button><br>
-  <textarea id="result" readonly></textarea>
+<div class="pure-form pure-form-stacked">
+  <input id="password" type="password" placeholder="Enter Password">
+  <textarea id="code" autocomplete="off" placeholder="Enter javascript"></textarea>
+  <button id="generate" onclick="go();" autocomplete="off" class="pure-button pure-button-primary">generate bookmarklet</button>
+  <textarea id="result" autocomplete="off" readonly></textarea>
+</div>
 </body>
 </html>
