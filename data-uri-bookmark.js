@@ -42,6 +42,10 @@ javascript: {
     /* remove relative urls */
     links.map(l => l.href = l.href);
 
+    var redirect = () => document.location = 'data:text/html;charset='
+                                             + document.characterSet + ','
+                                             + encodeURIComponent(document.body.parentNode.outerHTML);
+
     var asem = (function (fire_func) {
       var lock = 0;
       var func = fire_func;
@@ -60,13 +64,16 @@ javascript: {
           rem();
         };
       };
-    })(() => document.location = 'data:text/html;charset='
-                                 + document.characterSet + ','
-                                 + encodeURIComponent(document.body.parentNode.outerHTML));
+    })(redirect);
 
     imgs.map(i => img_to_b64(i.src, asem(d => i.src = d)));
     csss.map(s => get_data(s.href, asem(d => s.href = 'data:text/css;base64,' + b64encode(d))));
     jss.map(s => get_data(s.src, asem(d => s.src = 'data:text/javascript;base64,' + b64encode(d))));
+
+    var is_empty = (arr) => arr.length === 0;
+
+    if (is_empty(imgs) && is_empty(csss) && is_empty(jss))
+      redirect();
   }
 
   generate();
