@@ -29,6 +29,10 @@ javascript: {
   function get_data(url, func) {
     var xhr = new XMLHttpRequest();
     xhr.onload = () => func(xhr.responseText);
+    xhr.onreadystatechange = () => {
+      if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === XMLHttpRequest.UNSENT)
+        func('');
+    };
     xhr.open('GET', url);
     xhr.send();
   }
@@ -66,9 +70,9 @@ javascript: {
       };
     })(redirect);
 
-    imgs.map(i => img_to_b64(i.src, asem(d => i.src = d)));
-    csss.map(s => get_data(s.href, asem(d => s.href = 'data:text/css;base64,' + b64encode(d))));
-    jss.map(s => get_data(s.src, asem(d => s.src = 'data:text/javascript;base64,' + b64encode(d))));
+    imgs.map(i => img_to_b64(i.src, asem(d => { if (d) i.src = d; })));
+    csss.map(s => get_data(s.href, asem(d => { if (d) s.href = 'data:text/css;base64,' + b64encode(d); })));
+    jss.map(s => get_data(s.src, asem(d => { if (d) s.src = 'data:text/javascript;base64,' + b64encode(d); })));
 
     var is_empty = (arr) => arr.length === 0;
 
