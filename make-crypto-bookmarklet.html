@@ -9,9 +9,9 @@
     function go() {
       window.password = document.getElementById('password').value;
       window.code     = document.getElementById('code').value;
-      get_key()
+      get_key(password)
       .then(encrypt)
-      .then(() => document.getElementById('result').value = generate())
+      .then((ciphertext) => document.getElementById('result').value = generate(ciphertext))
       .then(() => document.getElementById('generate').disabled = true);
     };
   </script>

@@ -11,14 +11,14 @@ function hex2ab(str) {
   return Uint8Array.from(str.match(/../g).map(x => parseInt(x, 16)));
 }
 
-function string_to_ArrayBuffer(str) {
+function str2ab(str) {
   return (new TextEncoder).encode(str);
 }
 
-function get_key() {
+function get_key(password) {
   return window.crypto.subtle.importKey(
     "raw",
-    string_to_ArrayBuffer(password),
+    str2ab(password),
     { name: "PBKDF2" },
     false,
     ["deriveKey"]
@@ -35,23 +35,21 @@ function get_key() {
       false,
       ["encrypt", "decrypt"]
     );
-  }).then(key => window.__key = key);
-}
-
-function encrypt() {
-  return window.crypto.subtle.encrypt(
-    { name: "AES-CBC", iv: iv },
-    window.__key,
-    string_to_ArrayBuffer(code)
-  ).then(function (ciphertext) {
-    window.__ciphertext = ab2hex(new Uint8Array(ciphertext));
   });
 }
 
-function decrypt() {
+function encrypt(key) {
+  return window.crypto.subtle.encrypt(
+    { name: "AES-CBC", iv: iv },
+    key,
+    str2ab(code)
+  );
+}
+
+function decrypt(key) {
   window.crypto.subtle.decrypt(
     { name: "AES-CBC", iv: iv },
-    window.__key,
+    key,
     hex2ab(code)
   ).then(function (plaintext) {
     eval((new TextDecoder).decode(plaintext));
@@ -61,21 +59,19 @@ function decrypt() {
   });
 }
 
-function generate() {
-  password = null;
+function generate(ciphertext) {
   return [ 'javascript: {'
-         , 'var password = window.prompt("password:");'
          , 'var iv = "'   + ab2hex(iv)   + '";'
          , 'var salt = "' + ab2hex(salt) + '";'
-         , 'var code = "' + window.__ciphertext + '";'
-         , 'var hash = "SHA-1";'
-         , 'var iterations = 1000;'
+         , 'var code = "' + ab2hex(new Uint8Array(ciphertext)) + '";'
+         , 'var hash = "' + hash + '";'
+         , 'var iterations = ' + iterations + ';'
          , hex2ab.toString()
-         , string_to_ArrayBuffer.toString()
+         , str2ab.toString()
          , get_key.toString()
          , decrypt.toString()
          , 'salt = hex2ab(salt), iv = hex2ab(iv);'
-         , 'get_key().then(decrypt);'
+         , 'get_key(window.prompt("password:")).then(decrypt);'
          , '};void(0);'
          ].join("\n");
 }
