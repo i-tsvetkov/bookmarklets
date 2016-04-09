@@ -6,7 +6,7 @@ javascript: {
     link.download = file.name;
     link.click();
   }
-  var username = window._sharedData.entry_data.UserProfile[0].user.username;
+  var username = window._sharedData.entry_data.ProfilePage[0].user.username;
   var req = new XMLHttpRequest();
   var pictures = [];
   req.onload = function(event) {
@@ -14,7 +14,7 @@ javascript: {
     pictures = pictures.concat(json.items);
     if (json.more_available) {
       var last_id = json.items[json.items.length - 1].id.split('_')[0];
-      event.target.open("GET", ["http://instagram.com/", username, "/media/?max_id=", last_id].join(""));
+      event.target.open("GET", ["https://instagram.com/", username, "/media/?max_id=", last_id].join(""));
       event.target.send();
     }
     else {
@@ -22,7 +22,7 @@ javascript: {
       download_file({ name: username + "_photos.txt", text: urls });
     }
   };
-  req.open("GET", ["http://instagram.com/", username, "/media/"].join(""));
+  req.open("GET", ["https://instagram.com/", username, "/media/"].join(""));
   req.send();
 };
 void(0);
