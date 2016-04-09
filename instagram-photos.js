@@ -13,7 +13,7 @@ javascript: {
     var json = JSON.parse(event.target.responseText);
     pictures = pictures.concat(json.items);
     if (json.more_available) {
-      var last_id = json.items[json.items.length - 1].id;
+      var last_id = json.items[json.items.length - 1].id.split('_')[0];
       event.target.open("GET", ["http://instagram.com/", username, "/media/?max_id=", last_id].join(""));
       event.target.send();
     }
