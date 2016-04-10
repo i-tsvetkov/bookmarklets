@@ -38,12 +38,14 @@ function get_key(password) {
   });
 }
 
-function encrypt(key) {
-  return window.crypto.subtle.encrypt(
-    { name: "AES-CBC", iv: iv },
-    key,
-    str2ab(code)
-  );
+function encrypt(code) {
+  return function (key) {
+    return window.crypto.subtle.encrypt(
+      { name: "AES-CBC", iv: iv },
+      key,
+      str2ab(code)
+    );
+  };
 }
 
 function decrypt(key) {

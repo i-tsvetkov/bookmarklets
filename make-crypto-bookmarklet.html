@@ -7,13 +7,15 @@
   <script src="crypto-bookmarklet.js"></script>
   <script>
     function go() {
-      window.password = document.getElementById('password').value;
-      window.code     = document.getElementById('code').value;
+      var password = document.getElementById('password').value;
+      var code     = document.getElementById('code').value;
+      var result   = document.getElementById('result');
+      var gen_btn  = document.getElementById('generate');
       get_key(password)
-      .then(encrypt)
-      .then((ciphertext) => document.getElementById('result').value = generate(ciphertext))
-      .then(() => document.getElementById('generate').disabled = true);
-    };
+      .then(encrypt(code))
+      .then((ciphertext) => result.value = generate(ciphertext))
+      .then(() => gen_btn.disabled = true);
+    }
   </script>
 </head>
 <body>
