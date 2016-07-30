@@ -1,6 +1,5 @@
 javascript: {
-  var id = document.URL.match(/facebook.com\/(profile.php\?id=(\d+)|([^?&]+))/);
-  id = (id && id.length == 4) ? id[2] || id[3] : "";
+  var id = document.querySelector("a.profilePicThumb").href.match(/profile_id=(\d+)$/)[1];
   var url = "https://graph.facebook.com/" + id + "/picture?width=99999&height=99999";
   window.open(url);
 };
