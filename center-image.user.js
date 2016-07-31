@@ -1,4 +1,7 @@
 // ==UserScript==
+// @name Center Image
+// @version 0.2
+// @description Centers the image when is alone in a tab.
 // @match http://*/*
 // @match https://*/*
 // @match file://*/*
